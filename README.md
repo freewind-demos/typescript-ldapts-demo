@@ -1,18 +1,10 @@
-TypeScript Hello World Demo
-===========================
+TypeScript Ldapjs Demo
+=======================
+
+Use ldapjs to query data from  <https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/> 
 
 ```
 npm install
 npm run demo
-```
-
-Note:
-
-`esModuleInterop` is recommended to set to `true`,
-since we can have consistent importing syntax with babel,
-always use:
-
-```
-import some from 'some'
 ```
 

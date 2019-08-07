@@ -3,7 +3,11 @@
     "demo": "ts-node hello.ts"
   },
   "devDependencies": {
+    "@types/ldapjs": "0.0.0",
     "ts-node": "7.0.1",
     "typescript": "3.2.2"
+  },
+  "dependencies": {
+    "ldapjs": "1.0.2"
   }
 }
