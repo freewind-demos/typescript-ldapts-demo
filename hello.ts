@@ -44,13 +44,20 @@ client.search(adSuffix, searchOptions, (err, res: SearchCallbackResponse) => {
   res.on('end', result => {
     console.log('end status: ', result!.status);
     console.log('result', searchResult);
-    client.unbind();
+
+    console.log("#### will unbind")
+    client.unbind(err => {
+      console.log('### err', err)
+    });
+    console.log("#### unbind done")
+
+
   });
 
 });
 
 // Wrap up
-client.unbind(err => {
-  ifError(err);
-});
+// client.unbind(err => {
+//   ifError(err);
+// });
 
