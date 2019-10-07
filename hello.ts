@@ -1,63 +1,24 @@
-import {createClient, SearchCallbackResponse, SearchEntryObject} from 'ldapjs';
-import {ifError} from 'assert';
+import {Client} from 'ldapts';
 
 // LDAP Connection Settings
 const adSuffix = 'dc=example,dc=com';
 const dn = `cn=read-only-admin,${adSuffix}`;
 const pw = 'password';
 
-// createServer()
-// Create client and bind to AD
-export const client = createClient({
-  url: 'ldap://ldap.forumsys.com'
-});
-
-client.bind(dn, pw, err => {
-  ifError(err);
-});
-
-// Search users
-export const searchOptions = {
-  filter: `(mail=*@ldap.forumsys.com)`,
-  scope: 'sub',
-  attributes: ['dn', 'cn', 'givenName', 'sn', 'telephoneNumber', 'mail', 'manager', 'objectClass']
-};
-
-client.search(adSuffix, searchOptions, (err, res: SearchCallbackResponse) => {
-  ifError(err);
-
-  const searchResult: SearchEntryObject[] = [];
-
-  res.on('searchEntry', entry => {
-    searchResult.push(entry.object);
+async function main() {
+  const client = new Client({
+    url: 'ldap://ldap.forumsys.com'
+  });
+  await client.bind(dn, pw);
+  const result = await client.search(adSuffix, {
+    filter: `(mail=*@ldap.forumsys.com)`,
+    scope: 'sub',
+    attributes: ['dn', 'cn', 'givenName', 'sn', 'telephoneNumber', 'mail', 'manager', 'objectClass']
   });
 
-  res.on('searchReference', referral => {
-    console.log('searchReference: ', referral.uris.join());
-  });
+  console.log('search result', result);
+  await client.unbind();
+}
 
-  res.on('error', err => {
-    console.error('error: ', err.message);
-    throw err;
-  });
-
-  res.on('end', result => {
-    console.log('end status: ', result!.status);
-    console.log('result', searchResult);
-
-    console.log("#### will unbind")
-    client.unbind(err => {
-      console.log('### err', err)
-    });
-    console.log("#### unbind done")
-
-
-  });
-
-});
-
-// Wrap up
-// client.unbind(err => {
-//   ifError(err);
-// });
+main();
 

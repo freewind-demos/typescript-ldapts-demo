@@ -1,12 +1,9 @@
-TypeScript Ldapjs Demo
+TypeScript Ldapts Demo
 =======================
 
-Use ldapjs to query data from  <https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/> 
+Use ldap to query data from  <https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/> 
 
-注意：ldapjs有个bug，`client.unbind`中的callback不会被调用。
-所以如果对其进行封装成为async的话，`resolve/reject`不能放在callback里。
-
-https://github.com/ldapjs/node-ldapjs/issues/483#issuecomment-410075856
+注意：比ldapjs代码更好，也修复了那边的一些bug，推荐使用。
 
 ```
 npm install
